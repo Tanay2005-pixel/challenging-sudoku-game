@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sudoku Duel — Multiplayer Game</title>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="css/game.css"/>
+<link rel="stylesheet" href="css/multiplayer.css"/>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <a class="header-logo" href="dashboard.html">SUDOKU DUEL</a>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span id="diff-badge" class="diff-badge diff-medium">Medium</span>
+    <span id="size-label" style="font-family:'DM Mono',monospace; font-size:13px; color:var(--text2);">9×9</span>
+  </div>
+  <div class="header-right">
+    <div class="player-chip">
+      <span class="chip-dot"></span>
+      <span class="chip-name" id="hdr-name">Player</span>
+      <span class="chip-wins" id="hdr-wins">0W</span>
+    </div>
+    <a href="dashboard.html" class="btn-logout">← Back</a>
+  </div>
+</header>
+
+<!-- ── Multiplayer Game layout ── -->
+<div class="game-page multiplayer-mode">
+
+  <!-- ─── LEFT PANEL ─── -->
+  <div class="panel-left">
+
+    <!-- Timer -->
+    <div class="timer-card">
+      <div class="timer-label">Time Elapsed</div>
+      <div class="timer-display" id="timer-display">00:00</div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-card">
+      <div class="progress-header">
+        <span class="progress-title">Progress</span>
+        <span class="progress-count" id="progress-count">0/81</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- Mini stats -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <div class="stat-mini-card">
+        <div class="stat-mini-label">Errors</div>
+        <div class="stat-mini-value danger" id="errors-count">0</div>
+      </div>
+      <div class="stat-mini-card" style="position:relative;">
+        <div class="stat-mini-label">Hints Left</div>
+        <div class="stat-mini-value cyan" id="hint-count">3</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-card">
+      <div class="card-title" style="margin-bottom:10px;">Controls</div>
+
+      <button class="ctrl-btn" id="pause-btn" onclick="pauseGame()">
+        Pause
+      </button>
+      <button class="ctrl-btn" onclick="requestHint()" id="hint-btn">
+        Use Hint
+      </button>
+      <button class="ctrl-btn" onclick="resetBoard()">
+        Reset Board
+      </button>
+      <button class="ctrl-btn danger" onclick="giveUpMultiplayer()">
+        Give Up
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ─── BOARDS AREA ─── -->
+  <div class="boards-area">
+
+    <!-- Your Board -->
+    <div class="board-section">
+      <div class="board-header">
+        <div class="board-title">Your Board</div>
+        <div class="board-score" id="your-score">0</div>
+      </div>
+      <div class="board-area">
+        <div class="sudoku-wrapper">
+          <div class="sudoku-board" id="board" data-size="9"></div>
+          <div class="pause-overlay" id="pause-overlay">
+            <div class="pause-text">PAUSED</div>
+            <button class="btn-primary" style="margin-top:12px;" onclick="pauseGame()">RESUME</button>
+          </div>
+        </div>
+        <div class="numpad-wrapper">
+          <div class="numpad-title">Number Pad</div>
+          <div class="numpad" id="numpad"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── RIGHT PANEL ─── -->
+  <div class="panel-right">
+
+    <!-- Opponent Completion Notification -->
+    <div class="card" id="opponent-completed-card" style="display:none; background:var(--success-bg); border-color:var(--green);">
+      <div style="color:var(--green); font-weight:600; margin-bottom:8px;">✓ Opponent Completed!</div>
+      <div style="font-size:13px; color:var(--text2);">
+        <span id="opponent-name-notif">Opponent</span> finished with a score of <span id="opponent-final-score">0</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Result modal -->
+<div class="overlay" id="result-modal">
+  <div class="modal">
+    <span class="modal-icon" id="result-icon"></span>
+    <div class="modal-title" id="result-title">PUZZLE SOLVED!</div>
+    <div class="result-stats">
+      <div class="result-stat">
+        <div class="result-stat-label">Time</div>
+        <div class="result-stat-value" style="color:var(--accent2)" id="result-time">0:00</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-label">Filled</div>
+        <div class="result-stat-value" style="color:var(--green)" id="result-filled">81/81</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-label">Errors</div>
+        <div class="result-stat-value" style="color:var(--danger)" id="result-errors">0</div>
+      </div>
+      <div class="result-stat">
+        <div class="result-stat-label">Hints Used</div>
+        <div class="result-stat-value" style="color:var(--orange)" id="result-hints">0</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="returnToDashboard()">Dashboard</button>
+      <button class="btn-confirm" onclick="viewResults()">VIEW RESULTS</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/game-multiplayer.js"></script>
+</body>
+</html>

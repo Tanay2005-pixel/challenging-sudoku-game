@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sudoku Duel — Dashboard</title>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="css/dashboard.css"/>
+</head>
+<body>
+
+<header>
+  <a class="header-logo" href="dashboard.html">SUDOKU DUEL</a>
+  <nav class="header-nav">
+    <button class="nav-btn active" onclick="showSection('play')">Play</button>
+    <button class="nav-btn"        onclick="showSection('multiplayer')">Multiplayer</button>
+    <button class="nav-btn"        onclick="showSection('friends')">Friends</button>
+    <button class="nav-btn"        onclick="showSection('leaderboard')">Leaderboard</button>
+    <button class="nav-btn"        onclick="showSection('stats')">My Stats</button>
+  </nav>
+  <div class="header-right">
+    <div class="player-chip" onclick="showSection('stats')">
+      <span class="chip-name" id="hdr-name">Player</span>
+    </div>
+    <button class="btn-logout" onclick="doLogout()">Logout</button>
+  </div>
+</header>
+
+<div class="page">
+  <aside class="sidebar">
+    <div class="sidebar-label">Menu</div>
+    <button class="sidebar-btn active" onclick="showSection('play')">
+      Play
+    </button>
+    <button class="sidebar-btn" onclick="showSection('multiplayer')">
+      Multiplayer
+    </button>
+    <button class="sidebar-btn" onclick="showSection('friends')">
+      Friends
+    </button>
+    <button class="sidebar-btn" onclick="showSection('leaderboard')">
+      Leaderboard
+    </button>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Profile</div>
+    <button class="sidebar-btn" onclick="showSection('stats')">
+      My Stats
+    </button>
+  </aside>
+
+  <main class="content">
+
+    <!-- ── PLAY ── -->
+    <div class="section active" id="sec-play">
+      <div class="page-title">PLAY</div>
+      <div class="page-sub">Choose your game mode and start playing</div>
+
+      <div class="play-grid">
+        <div class="play-card" onclick="openSinglePlayer()">
+          <div class="play-icon"></div>
+          <div class="play-title">QUICK MATCH</div>
+          <span class="play-badge badge-yellow">SINGLE PLAYER</span>
+        </div>
+        <div class="play-card multi" onclick="openMultiplayer()">
+          <div class="play-icon"></div>
+          <div class="play-title">MULTIPLAYER</div>
+          <span class="play-badge badge-cyan">2 PLAYERS</span>
+        </div>
+      </div>
+
+      <!-- Single player options -->
+      <div class="card" id="sp-options" style="display:none; margin-bottom:20px;">
+        <div class="card-title">Quick Match Settings</div>
+        <div style="margin-bottom:14px;">
+          <div style="font-size:12px; color:var(--text2); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Board Size</div>
+          <div class="size-row">
+            <div class="diff-row" id="size-row">
+              <button class="pill" onclick="setSize(4)">4×4</button>
+              <button class="pill active" onclick="setSize(9)">9×9</button>
+              <button class="pill" onclick="setSize(16)">16×16</button>
+            </div>
+          </div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-size:12px; color:var(--text2); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Difficulty</div>
+          <div class="diff-row" id="diff-row">
+            <button class="pill active" onclick="setDiff(1)">Easy</button>
+            <button class="pill" onclick="setDiff(2)">Medium</button>
+            <button class="pill" onclick="setDiff(3)">Hard</button>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <button class="btn-primary" onclick="startGame()">START GAME</button>
+          <button class="btn-cancel" style="max-width:120px;" onclick="document.getElementById('sp-options').style.display='none'">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Multiplayer options -->
+      <div class="card" id="mp-options" style="display:none; margin-bottom:20px;">
+        <div class="card-title">Multiplayer Options</div>
+        <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+          <button class="btn-primary" onclick="toast('Looking for opponent…', 'info')">RANDOM MATCH</button>
+          <button class="btn-secondary" onclick="toast('Room code copied!', 'success')">CREATE ROOM</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <input id="room-code" placeholder="Enter room code…"
+            style="flex:1; background:var(--bg2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'DM Mono',monospace; font-size:14px; padding:12px 16px; outline:none; transition:border-color 0.2s;"
+            onfocus="this.style.borderColor='var(--accent2)'" onblur="this.style.borderColor='var(--border)'"/>
+          <button class="btn-secondary" onclick="joinRoom()">JOIN</button>
+        </div>
+        <div style="margin-top:12px;">
+          <button class="btn-cancel" onclick="document.getElementById('mp-options').style.display='none'">Cancel</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Recent Games</div>
+        <div id="recent-games"></div>
+      </div>
+    </div>
+
+    <!-- ── MULTIPLAYER ── -->
+    <div class="section" id="sec-multiplayer">
+      <div class="page-title">MULTIPLAYER</div>
+      <div class="page-sub">Challenge friends or find random opponents</div>
+
+      <!-- Quick Actions -->
+      <div class="play-grid">
+        <div class="play-card" onclick="window.location.href='multiplayer.html'">
+          <div class="play-icon"></div>
+          <div class="play-title">CREATE ROOM</div>
+          <span class="play-badge badge-cyan">PRIVATE</span>
+        </div>
+        <div class="play-card" onclick="window.location.href='multiplayer.html'">
+          <div class="play-icon"></div>
+          <div class="play-title">JOIN ROOM</div>
+          <span class="play-badge badge-cyan">INVITE</span>
+        </div>
+      </div>
+
+      <!-- Multiplayer Leaderboard -->
+      <div class="card">
+        <div class="card-title">Multiplayer Leaderboard</div>
+        <div class="lb-header">
+          <div style="width:32px;"><span>#</span></div>
+          <div style="width:38px;"></div>
+          <div style="flex:1;"><span>Player</span></div>
+          <span style="min-width:70px; text-align:right;">Wins</span>
+          <span style="min-width:70px; text-align:right;">Best Score</span>
+        </div>
+        <div id="mp-lb-list"></div>
+      </div>
+    </div>
+
+    <!-- ── FRIENDS ── -->
+    <div class="section" id="sec-friends">
+      <div class="page-title">FRIENDS</div>
+
+      <div class="friends-layout">
+        <div>
+          <div class="search-bar">
+            <input id="friend-search" type="text" placeholder="Search by username…"/>
+            <button class="btn-search" onclick="searchPlayer()">Search</button>
+          </div>
+          <div class="card" id="search-results" style="display:none; margin-bottom:16px;">
+            <div class="card-title">Search Results</div>
+            <div id="search-list"></div>
+          </div>
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-title">Online Friends</div>
+            <div id="online-friends"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">All Friends</div>
+            <div id="all-friends"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">People You May Know</div>
+            <div id="recommendations"></div>
+          </div>
+          <div class="card" style="margin-top:16px;">
+            <div class="card-title">Pending Requests</div>
+            <div id="pending-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LEADERBOARD ── -->
+    <div class="section" id="sec-leaderboard">
+      <div class="page-title">LEADERBOARD</div>
+      <div class="page-sub">Top players ranked by wins and win rate</div>
+
+      <div class="lb-tabs">
+        <button class="lb-tab active" onclick="setLbTab('global', this)">Global</button>
+      </div>
+
+      <div class="card">
+        <div class="lb-header">
+          <div style="width:32px;"><span>#</span></div>
+          <div style="width:38px;"></div>
+          <div style="flex:1;"><span>Player</span></div>
+          <span style="min-width:70px; text-align:right;">Wins</span>
+          <span style="min-width:60px; text-align:right;">Win %</span>
+        </div>
+        <div id="lb-list"></div>
+      </div>
+    </div>
+
+    <!-- ── STATS ── -->
+    <div class="section" id="sec-stats">
+      <div class="page-title" id="stats-title">MY STATS</div>
+      <div class="page-sub">Your performance overview</div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Wins</div>
+          <div class="stat-value stat-green" id="stat-wins">0</div>
+          <div class="stat-sub">All time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Losses</div>
+          <div class="stat-value stat-orange" id="stat-loss">0</div>
+          <div class="stat-sub">All time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Win Rate</div>
+          <div class="stat-value stat-accent" id="stat-wr">0%</div>
+          <div class="stat-sub">Wins / Games</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Best Time</div>
+          <div class="stat-value stat-cyan" id="stat-time">—</div>
+          <div class="stat-sub">Solo record</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Recent Activity</div>
+        <div id="stats-recent" style="color:var(--muted); font-size:13px; padding:8px 0;">
+          Play some games to see your activity here.
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Challenge Modal -->
+<div class="overlay" id="challenge-modal">
+  <div class="modal">
+    <div class="modal-title">⚔ CHALLENGE</div>
+    <div class="modal-body">
+      <p>Send a challenge to <strong id="challenge-name"></strong>?</p>
+      <p style="margin-top:10px;">They will receive a notification and can accept or decline.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('challenge-modal')">Cancel</button>
+      <button class="btn-confirm" onclick="sendChallenge()">SEND</button>
+    </div>
+  </div>
+</div>
+
+<!-- Remove Friend Modal -->
+<div class="overlay" id="remove-modal">
+  <div class="modal">
+    <div class="modal-title">REMOVE FRIEND</div>
+    <div class="modal-body">
+      <p>Remove <strong id="remove-name"></strong> from your friends list?</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('remove-modal')">Cancel</button>
+      <button class="btn-confirm" style="background:var(--danger);" onclick="confirmRemove()">REMOVE</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>

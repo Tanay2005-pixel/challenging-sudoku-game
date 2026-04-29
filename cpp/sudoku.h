@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <random>
 
 using namespace std;
 #define EASY   1
@@ -49,6 +50,8 @@ struct PGraph {
     vector<vector<Edge>> adj;
 };
 
-#endif
+bool fill(vector<vector<int>>& b, Cfg& cfg, std::mt19937& rng);
 vector<int>   getValid(vector<vector<int>>& b, Cfg& cfg, int row, int col);
 pair<int,int> pickCell(vector<vector<int>>& b, Cfg& cfg);
+
+#endif

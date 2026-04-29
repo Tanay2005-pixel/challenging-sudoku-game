@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sudoku Duel — Multiplayer Results</title>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="css/multiplayer.css"/>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <a class="header-logo" href="dashboard.html">SUDOKU DUEL</a>
+  <div class="header-right">
+    <div class="player-chip">
+      <span class="chip-dot"></span>
+      <span class="chip-name" id="hdr-name">Player</span>
+      <span class="chip-wins" id="hdr-wins">0W</span>
+    </div>
+    <a href="dashboard.html" class="btn-logout">← Back</a>
+  </div>
+</header>
+
+<!-- ── Results Page ── -->
+<div class="results-page">
+
+  <!-- Winner Announcement -->
+  <div class="results-header">
+    <div class="winner-icon" id="winner-icon"></div>
+    <div class="winner-title" id="winner-title">Loading Results...</div>
+    <div class="winner-subtitle" id="winner-subtitle">Please wait</div>
+  </div>
+
+  <!-- Results Comparison -->
+  <div class="results-container">
+
+    <!-- Your Results -->
+    <div class="results-card your-results">
+      <div class="results-card-header">
+        <div class="results-player-name" id="your-name">You</div>
+        <div class="results-badge" id="your-badge">-</div>
+      </div>
+
+      <div class="results-stats-grid">
+        <div class="results-stat">
+          <div class="results-stat-label">Score</div>
+          <div class="results-stat-value" id="your-final-score">-</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Time</div>
+          <div class="results-stat-value" id="your-final-time">-</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Errors</div>
+          <div class="results-stat-value" id="your-final-errors">-</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Hints</div>
+          <div class="results-stat-value" id="your-final-hints">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VS Divider -->
+    <div class="results-vs">
+      <div class="vs-text">VS</div>
+    </div>
+
+    <!-- Opponent Results -->
+    <div class="results-card opponent-results">
+      <div class="results-card-header">
+        <div class="results-player-name" id="opponent-name">Opponent</div>
+        <div class="results-badge" id="opponent-badge">-</div>
+      </div>
+
+      <div class="results-stats-grid">
+        <div class="results-stat">
+          <div class="results-stat-label">Score</div>
+          <div class="results-stat-value" id="opponent-final-score">-</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Time</div>
+          <div class="results-stat-value" id="opponent-final-time">-</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Errors</div>
+          <div class="results-stat-value" id="opponent-final-errors">-</div>
+        </div>
+        <div class="results-stat">
+          <div class="results-stat-label">Hints</div>
+          <div class="results-stat-value" id="opponent-final-hints">-</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Comparison Details -->
+  <div class="results-details">
+    <div class="details-card">
+      <div class="details-title">Score Breakdown</div>
+      <div class="comparison-row">
+        <span class="comparison-label">Your Score</span>
+        <span class="comparison-value" id="comp-your-score">-</span>
+        <span class="comparison-diff" id="comp-score-diff">-</span>
+      </div>
+      <div class="comparison-row">
+        <span class="comparison-label">Opponent Score</span>
+        <span class="comparison-value" id="comp-opponent-score">-</span>
+      </div>
+    </div>
+
+    <div class="details-card">
+      <div class="details-title">Time Comparison</div>
+      <div class="comparison-row">
+        <span class="comparison-label">Your Time</span>
+        <span class="comparison-value" id="comp-your-time">-</span>
+        <span class="comparison-diff faster" id="comp-time-diff">-</span>
+      </div>
+      <div class="comparison-row">
+        <span class="comparison-label">Opponent Time</span>
+        <span class="comparison-value" id="comp-opponent-time">-</span>
+      </div>
+    </div>
+
+    <div class="details-card">
+      <div class="details-title">Accuracy</div>
+      <div class="comparison-row">
+        <span class="comparison-label">Your Errors</span>
+        <span class="comparison-value" id="comp-your-errors">-</span>
+        <span class="comparison-diff" id="comp-errors-diff">-</span>
+      </div>
+      <div class="comparison-row">
+        <span class="comparison-label">Opponent Errors</span>
+        <span class="comparison-value" id="comp-opponent-errors">-</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="results-actions">
+    <button class="btn-secondary" onclick="returnToDashboard()">← RETURN TO DASHBOARD</button>
+    <button class="btn-primary" onclick="playAgain()">PLAY AGAIN</button>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="js/results-multiplayer.js"></script>
+</body>
+</html>

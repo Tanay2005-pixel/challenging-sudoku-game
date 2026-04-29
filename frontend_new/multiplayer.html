@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sudoku Duel — Multiplayer Lobby</title>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="css/multiplayer.css"/>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <a class="header-logo" href="dashboard.html">SUDOKU DUEL</a>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span id="diff-badge" class="diff-badge diff-medium">Medium</span>
+    <span id="size-label" style="font-family:'DM Mono',monospace; font-size:13px; color:var(--text2);">9×9</span>
+  </div>
+  <div class="header-right">
+    <div class="player-chip">
+      <span class="chip-dot"></span>
+      <span class="chip-name" id="hdr-name">Player</span>
+      <span class="chip-wins" id="hdr-wins">0W</span>
+    </div>
+    <a href="dashboard.html" class="btn-logout">← Back</a>
+  </div>
+</header>
+
+<!-- ── Lobby layout ── -->
+<div class="lobby-page">
+
+  <!-- ─── LEFT PANEL ─── -->
+  <div class="panel-left">
+
+    <!-- Create Room Section -->
+    <div class="card">
+      <div class="card-title">Create Room</div>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:12px; color:var(--text2); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Board Size</div>
+        <div class="size-row">
+          <button class="pill" onclick="setLobbySize(4)">4×4</button>
+          <button class="pill active" onclick="setLobbySize(9)">9×9</button>
+          <button class="pill" onclick="setLobbySize(16)">16×16</button>
+        </div>
+      </div>
+      <div style="margin-bottom:20px;">
+        <div style="font-size:12px; color:var(--text2); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Difficulty</div>
+        <div class="diff-row">
+          <button class="pill active" onclick="setLobbyDiff(1)">Easy</button>
+          <button class="pill" onclick="setLobbyDiff(2)">Medium</button>
+          <button class="pill" onclick="setLobbyDiff(3)">Hard</button>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="createRoom()" style="width:100%;">CREATE ROOM</button>
+    </div>
+
+    <!-- Join Room Section -->
+    <div class="card">
+      <div class="card-title">Join Room</div>
+      <div style="margin-bottom:12px;">
+        <input id="join-room-code" placeholder="Enter room code…"
+          style="width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'DM Mono',monospace; font-size:14px; padding:12px 16px; outline:none; transition:border-color 0.2s; text-transform:uppercase;"
+          onfocus="this.style.borderColor='var(--accent2)'" onblur="this.style.borderColor='var(--border)'"/>
+      </div>
+      <button class="btn-secondary" onclick="joinRoom()" style="width:100%;">JOIN ROOM</button>
+    </div>
+
+  </div>
+
+  <!-- ─── CENTER PANEL ─── -->
+  <div class="panel-center">
+
+    <!-- Room Code Display (shown after creating room) -->
+    <div class="card" id="room-info" style="display:none;">
+      <div class="card-title">Your Room</div>
+      <div class="room-code-display">
+        <div class="room-code-label">Room Code</div>
+        <div class="room-code-value" id="room-code-display">ABC123</div>
+        <button class="btn-secondary" onclick="copyRoomCode()" style="width:100%; margin-top:12px;">COPY CODE</button>
+      </div>
+      <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+        <div style="font-size:12px; color:var(--text2); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">Status</div>
+        <div class="status-badge waiting" id="room-status">Waiting for opponent…</div>
+      </div>
+    </div>
+
+    <!-- Opponent Info (shown when opponent joins) -->
+    <div class="card" id="opponent-info" style="display:none;">
+      <div class="card-title">Opponent</div>
+      <div class="opponent-card">
+        <div class="opponent-avatar" id="opponent-avatar">👤</div>
+        <div class="opponent-details">
+          <div class="opponent-name" id="opponent-name">Player Name</div>
+          <div class="opponent-stats">
+            <span id="opponent-wins">0W</span>
+            <span id="opponent-wr">0%</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="startMultiplayerGame()" style="width:100%; margin-top:16px;" id="start-btn" disabled>WAITING FOR OPPONENT…</button>
+    </div>
+
+    <!-- Waiting Screen -->
+    <div class="card" id="waiting-screen" style="display:none; text-align:center;">
+      <div style="font-size:48px; margin-bottom:16px;">⏳</div>
+      <div class="card-title">Waiting for Opponent</div>
+      <div style="color:var(--text2); margin-bottom:20px;">Share your room code to invite a friend</div>
+      <div class="spinner"></div>
+    </div>
+
+  </div>
+
+  <!-- ─── RIGHT PANEL ─── -->
+  <div class="panel-right">
+
+    <!-- Game Settings Summary -->
+    <div class="card">
+      <div class="card-title">Game Settings</div>
+      <div class="settings-summary">
+        <div class="setting-item">
+          <span class="setting-label">Board Size</span>
+          <span class="setting-value" id="settings-size">9×9</span>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">Difficulty</span>
+          <span class="setting-value" id="settings-diff">Medium</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="card">
+      <div class="card-title">Your Stats</div>
+      <div class="stats-summary">
+        <div class="stat-item">
+          <span class="stat-label">Multiplayer Wins</span>
+          <span class="stat-value" id="mp-wins">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Win Rate</span>
+          <span class="stat-value" id="mp-wr">0%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Confirmation Modal -->
+<div class="overlay" id="confirm-modal">
+  <div class="modal">
+    <div class="modal-title" id="confirm-title">Confirm</div>
+    <div class="modal-body" id="confirm-body">Are you sure?</div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('confirm-modal')">Cancel</button>
+      <button class="btn-confirm" onclick="confirmAction()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/multiplayer.js"></script>
+</body>
+</html>

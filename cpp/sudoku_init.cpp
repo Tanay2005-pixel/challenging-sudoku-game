@@ -40,7 +40,7 @@ vector<int> getValid(vector<vector<int>>& b, Cfg& cfg, int row, int col) {
     return vals;
 }
 
-pair<int, int> pickCell(vector<vector<int>>& b, Cfg& cfg) {
+pair<int,int> pickCell(vector<vector<int>>& b, Cfg& cfg) {
     int n    = cfg.n;
     int best = n + 1;
     int br   = -1;

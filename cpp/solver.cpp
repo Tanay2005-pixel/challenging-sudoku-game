@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 bool solve(vector<vector<int>>& b, Cfg& cfg) {
-    pair<int, int> cell = pickCell(b, cfg);
+    pair<int,int> cell = pickCell(b, cfg);
     int row = cell.first;
     int col = cell.second;
     if (row == -1) return true;
@@ -17,13 +17,12 @@ bool solve(vector<vector<int>>& b, Cfg& cfg) {
     }
     return false;
 }
-
 bool isDone(vector<vector<int>>& b, Cfg& cfg) {
     int n = cfg.n;
     for (int r = 0; r < n; r++)
-        for (int c = 0; c < n; c++)
-            if (b[r][c] == 0) return false;
-    return true;
+    for (int c = 0; c < n; c++)
+if (b[r][c] == 0) return false;
+return true;
 }
 
 int getHint(vector<vector<int>>& b, Cfg& cfg, int row, int col) {

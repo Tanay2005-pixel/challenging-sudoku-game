@@ -1,0 +1,525 @@
+/* waiting room layout */
+.lobby-page {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  padding: 32px;
+  min-height: calc(100vh - 62px);
+  align-items: start;
+}
+
+.panel-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-center {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 320px;
+}
+
+.panel-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 280px;
+}
+
+/* room code display */
+.room-code-display {
+  background: var(--bg2);
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.room-code-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.room-code-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* game status badge */
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-badge.waiting {
+  background: var(--orange);
+  color: white;
+}
+
+.status-badge.ready {
+  background: var(--green);
+  color: white;
+}
+
+.status-badge.playing {
+  background: var(--accent);
+  color: white;
+}
+
+/* other player card */
+.opponent-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg2);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.opponent-avatar {
+  font-size: 32px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border-radius: 50%;
+}
+
+.opponent-details {
+  flex: 1;
+}
+
+.opponent-name {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.opponent-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+/* loading spinner */
+.spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* game settings display */
+.settings-summary,
+.stats-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-item,
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.setting-item:last-child,
+.stat-item:last-child {
+  border-bottom: none;
+}
+
+.setting-label,
+.stat-label {
+  font-size: 12px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.setting-value,
+.stat-value {
+  font-weight: 600;
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+}
+
+/* multiplayer game screen */
+.game-page.multiplayer-mode {
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+/* both player boards */
+.boards-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.board-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.board-title {
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.opponent-status {
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.opponent-status.playing {
+  color: var(--green);
+}
+
+.opponent-status.completed {
+  color: var(--accent);
+}
+
+.opponent-status.disconnected {
+  color: var(--danger);
+}
+
+.board-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+/* other player board style */
+.sudoku-board.opponent-board {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.opponent-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* opponent finished alert */
+#opponent-completed-card {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* game results page */
+.results-page {
+  padding: 40px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.winner-icon {
+  font-size: 80px;
+  margin-bottom: 16px;
+  animation: bounce 0.6s ease-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.winner-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.winner-subtitle {
+  font-size: 16px;
+  color: var(--text2);
+}
+
+/* player results cards */
+.results-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+.results-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.results-card.your-results {
+  border-color: var(--accent);
+  border-width: 2px;
+}
+
+.results-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-player-name {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.results-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.results-badge.winner {
+  background: var(--green);
+  color: white;
+}
+
+.results-badge.loser {
+  background: var(--border);
+  color: var(--text2);
+}
+
+/* result stats grid */
+.results-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.results-stat {
+  text-align: center;
+}
+
+.results-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.results-stat-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* versus divider */
+.results-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vs-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* detailed comparison */
+.results-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.details-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.details-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.comparison-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.comparison-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-label {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.comparison-value {
+  font-weight: 600;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+}
+
+.comparison-diff {
+  font-size: 12px;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.comparison-diff.faster {
+  color: var(--green);
+}
+
+/* result page buttons */
+.results-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.results-actions button {
+  min-width: 200px;
+}
+
+/* mobile responsive */
+@media (max-width: 1200px) {
+  .lobby-page,
+  .game-page.multiplayer-mode {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .boards-area {
+    grid-template-columns: 1fr;
+  }
+
+  .results-container {
+    grid-template-columns: 1fr;
+  }
+
+  .results-vs {
+    transform: rotate(90deg);
+    margin: 16px 0;
+  }
+
+  .results-actions {
+    flex-direction: column;
+  }
+
+  .results-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .lobby-page,
+  .game-page.multiplayer-mode {
+    padding: 16px;
+  }
+
+  .room-code-value {
+    font-size: 36px;
+  }
+
+  .winner-title {
+    font-size: 40px;
+  }
+
+  .results-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-details {
+    grid-template-columns: 1fr;
+  }
+}
