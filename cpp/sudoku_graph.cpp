@@ -109,9 +109,9 @@ void printGraph(SGraph& g) {
     for (int i = 0; i < total; i++) {
         Cell& nd = g.nodes[i];
         cout << "Node " << i
-                  << " (" << nd.row << "," << nd.col << ")"
-                  << " color=" << nd.color
-                  << " nbrs=" << nd.nbrs.size()
+                  << " (" << nd.row << ", " << nd.col << ")"
+                  << " color = " << nd.color
+                  << " nbrs = " << nd.nbrs.size()
                   << "\n";
     }
 }

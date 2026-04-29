@@ -72,12 +72,12 @@ vector<Player> recommend(PGraph& pg, int pid, int topN) {
         }
     }
 
-    vector<pair<int,int>> ranked;
+    vector<pair<int, int>> ranked;
     for (int i = 0; i < total; i++)
         if (score[i] > 0) ranked.push_back(make_pair(i, score[i]));
 
     sort(ranked.begin(), ranked.end(),
-        [](pair<int,int> a, pair<int,int> b) {
+        [](pair<int, int> a, pair<int, int> b) {
             return a.second > b.second;
         });
 
@@ -92,10 +92,10 @@ void printPGraph(PGraph& pg) {
     for (int i = 0; i < (int)pg.plist.size(); i++) {
         cout << "Player [" << pg.plist[i].id << "] "
                   << pg.plist[i].name
-                  << " wins=" << pg.plist[i].wins
-                  << " loss=" << pg.plist[i].loss << "\n  -> ";
+                  << " wins = " << pg.plist[i].wins
+                  << " loss = " << pg.plist[i].loss << "\n  -> ";
         for (int j = 0; j < (int)pg.adj[i].size(); j++)
-            cout << pg.adj[i][j].to << "(wt=" << pg.adj[i][j].wt << ") ";
+            cout << pg.adj[i][j].to << "(wt = " << pg.adj[i][j].wt << ") ";
         cout << "\n";
     }
 }

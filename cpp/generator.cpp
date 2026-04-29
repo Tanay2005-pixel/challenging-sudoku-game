@@ -6,7 +6,7 @@
 
 using namespace std;
 bool fill( vector<vector<int>>& b, Cfg& cfg, mt19937& rng) {
-    pair<int,int> cell = pickCell(b, cfg);
+    pair<int, int> cell = pickCell(b, cfg);
     int row = cell.first;
     int col = cell.second;
     if (row == -1) return true;
@@ -29,7 +29,7 @@ bool oneOnly(vector<vector<int>> b, Cfg& cfg) {
 
     function<void()> go = [&]() {
         if (cnt > 1) return;
-        pair<int,int> cell = pickCell(b, cfg);
+        pair<int, int> cell = pickCell(b, cfg);
         int row = cell.first;
         int col = cell.second;
         if (row == -1) { cnt++; return; }

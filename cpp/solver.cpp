@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 bool solve(vector<vector<int>>& b, Cfg& cfg) {
-    pair<int,int> cell = pickCell(b, cfg);
+    pair<int, int> cell = pickCell(b, cfg);
     int row = cell.first;
     int col = cell.second;
     if (row == -1) return true;
